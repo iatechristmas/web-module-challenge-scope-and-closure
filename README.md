@@ -44,6 +44,9 @@ Find the file `index.js` and complete the tasks.
 Edit the `ReadMe` file with your answers.
 
 1. In your own words, define closure (1-2 sentences).
+
+- closure makes it possible for a function to have private variables. The variable is not accessible outside of the function due to scope
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -65,8 +68,15 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+
+everything would stay the same except for the name and randomized dice roll.
+
 c. What is the lexical scope of `newRoll`? 
+
+newRoll is being used in the console log, and then being returned in the unnamed function parent to it
 
 ### Task 3 - Stretch Goals
 
