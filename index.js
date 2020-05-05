@@ -28,17 +28,22 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * the count variable is defined outside of the function in counter 2
+ * 
  * 2. Which of the two uses a closure? How can you tell?
+ * 
+ * counter 1 uses closure. You can tell because all the elements of the function are contained inside the function.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
  *
+ * counter 2 would be better when you want to modify or redefine the count varibale outside of the function. counter1 would be better when you want the count variable to only be accessible through the function.
 */
 
 // counter1 code
 function counterMaker() {
   let count = 0;
   return function counter() {
-    count++;
+    return count++;
   }
 }
 
@@ -56,11 +61,11 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning() {
+  let randomNum = Math.floor(Math.random() * 3);
+  return randomNum;
 }
+console.log("task 2:", inning('Winnipeg Jets'))
 
 /* Task 3: finalScore()
 
@@ -74,17 +79,26 @@ finalScore(inning, 9) might return:
   "Away": 5,
 }
 
-*/ 
+*/
 
-function finalScore(/*code Here*/){
 
-  /*Code Here*/
 
+function finalScore(numInnings, inningFunction) {
+  let homeTeam = 0;
+  let awayTeam = 0;
+  for (let i = 0; i < numInnings; i++) {
+    homeTeam += inningFunction();
+    awayTeam += inningFunction();
+  }
+  return { "Home": homeTeam, "Away": awayTeam };
+  //return { "Home": homeTeam, "Away": awayTeam };
 }
 
-/* Task 4: 
+console.log("task 3: ", finalScore(10, inning));
 
-Create a function called `scoreboard` that accepts the following parameters: 
+/* Task 4:
+
+Create a function called `scoreboard` that accepts the following parameters:
 
 (1) Callback function `getInningScore`
 (2) Callback function `inning`
@@ -104,8 +118,18 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(numInnings, inningScoreFunction, inningFunction) {
+  const results = [];
+  const final = { "Home": 0, "Away": 0 }
+  for (let i = 0; i < numInnings; i++) {
+    const obj = Object.assign({ "inning": i + 1 }, inningScoreFunction(1, inningFunction))
+    results.push(`Inning ${obj.inning}: ${obj.Home} - ${obj.Away}`)
+    final["Home"] += obj.Home
+    final["Away"] += obj.Away
+  }
+  results.push(`Final Score: ${final.Home} - ${final.Away}`)
+  return results;
 }
 
+console.log("Task 4: ", scoreboard(10, finalScore, inning));
 
